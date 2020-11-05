@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
-  title: test
+  title: w2mj api
   version: '1.0'
-  description: test api
+  description: w2mj api schema
   contact:
     name: Toshimitsu Watanabe
     email: kz86nu@gmail.com
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:1111'
 paths:
   /AddNewEvent:
     post:
@@ -73,6 +73,33 @@ paths:
                   $ref: '#/components/schemas/EachAvailablity'
             examples: {}
         description: ''
+  '/AddParticipant/{eventID}':
+    parameters:
+      - schema:
+          type: string
+        name: eventID
+        in: path
+        required: true
+    post:
+      summary: add new participant
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '417':
+          description: Expectation Failed
+      operationId: post-eventID-addParticipant
+      description: add new participant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
 components:
   schemas:
     Event:
