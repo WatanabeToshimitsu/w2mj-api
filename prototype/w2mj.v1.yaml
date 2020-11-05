@@ -19,10 +19,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  eventId:
-                    type: string
+                type: string
         '417':
           description: Expectation Failed
       operationId: post-NewEvent
@@ -30,7 +27,8 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/Event'
     parameters: []
   '/{eventId}':
     parameters:
@@ -52,7 +50,7 @@ paths:
       operationId: get-eventId
       description: get event
     post:
-      summary: update one's availabity
+      summary: update participant's availability
       tags: []
       operationId: post-eventId
       responses:
@@ -112,7 +110,7 @@ components:
       type: object
       x-examples: {}
       properties:
-        id:
+        eventId:
           type: string
         dates:
           type: array
@@ -134,6 +132,14 @@ components:
           type: array
           items:
             type: string
+      required:
+        - eventId
+        - dates
+        - startTime
+        - endTime
+        - allAvailability
+        - participants
+        - passwords
     EachAvailablity:
       title: EachAvailablity
       type: array
@@ -143,8 +149,10 @@ components:
           type: boolean
   securitySchemes:
     API Key - 1:
-      type: http
-      scheme: basic
+      name: API Key
+      type: apiKey
+      in: query
+      description: ''
 tags:
   - name: test
     description: test
