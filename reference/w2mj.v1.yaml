@@ -103,7 +103,7 @@ paths:
 components:
   schemas:
     Event:
-      title: Title
+      title: Event
       type: object
       x-examples: {}
       properties:
