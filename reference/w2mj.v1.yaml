@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: test
+  version: '1.0'
+  description: test api
+  contact:
+    name: Toshimitsu Watanabe
+    email: kz86nu@gmail.com
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /AddNewEvent:
+    post:
+      summary: add new event
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  eventId:
+                    type: string
+        '417':
+          description: Expectation Failed
+      operationId: post-NewEvent
+      description: create new event
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+    parameters: []
+  '/{eventId}':
+    parameters:
+      - schema:
+          type: string
+        name: eventId
+        in: path
+        required: true
+    get:
+      summary: get event
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      operationId: get-eventId
+      description: get event
+    post:
+      summary: update one's availabity
+      tags: []
+      operationId: post-eventId
+      responses:
+        '200':
+          description: OK
+        '417':
+          description: Expectation Failed
+      description: update one's availability
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                participantId:
+                  type: integer
+                availability:
+                  $ref: '#/components/schemas/EachAvailablity'
+            examples: {}
+        description: ''
+components:
+  schemas:
+    Event:
+      title: Title
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: string
+        dates:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        allAvailability:
+          type: array
+          items:
+            $ref: '#/components/schemas/EachAvailablity'
+        participants:
+          type: array
+          items:
+            type: string
+        passwords:
+          type: array
+          items:
+            type: string
+    EachAvailablity:
+      title: EachAvailablity
+      type: array
+      items:
+        type: array
+        items:
+          type: boolean
+  securitySchemes:
+    API Key - 1:
+      type: http
+      scheme: basic
+tags:
+  - name: test
+    description: test
