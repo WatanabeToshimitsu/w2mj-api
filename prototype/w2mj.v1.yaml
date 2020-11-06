@@ -9,9 +9,9 @@ info:
 servers:
   - url: 'http://localhost:1111'
 paths:
-  /AddNewEvent:
+  /poll:
     post:
-      summary: add new event
+      summary: create new poll
       tags: []
       responses:
         '200':
@@ -23,18 +23,18 @@ paths:
         '417':
           description: Expectation Failed
       operationId: post-NewEvent
-      description: create new event
+      description: create new poll
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Event'
     parameters: []
-  '/{eventId}':
+  '/poll/{pollId}':
     parameters:
       - schema:
           type: string
-        name: eventId
+        name: pollId
         in: path
         required: true
     get:
@@ -74,11 +74,11 @@ paths:
                 - availability
             examples: {}
         description: ''
-  '/AddParticipant/{eventID}':
+  '/poll/{pollId}/addParticipant':
     parameters:
       - schema:
           type: string
-        name: eventID
+        name: pollId
         in: path
         required: true
     post:
@@ -90,7 +90,7 @@ paths:
         '417':
           description: Expectation Failed
       operationId: post-eventID-addParticipant
-      description: add new participant
+      description: add new participant into poll
       requestBody:
         content:
           application/json:
@@ -105,8 +105,8 @@ paths:
                 - name
 components:
   schemas:
-    Event:
-      title: Event
+    Poll:
+      title: Poll
       type: object
       x-examples: {}
       properties:
