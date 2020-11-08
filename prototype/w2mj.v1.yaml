@@ -23,12 +23,7 @@ paths:
         '417':
           description: Expectation Failed
       operationId: create-new-poll
-      description: create new poll. returns poll ID.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Poll'
+      description: returns poll ID.
     parameters: []
   '/poll/{pollId}':
     parameters:
@@ -46,7 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/Poll'
       operationId: get-poll
       description: returns poll object contains all data of poll.
   '/poll/{pollId}/addParticipant':
@@ -62,16 +57,25 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: string
         '417':
           description: Expectation Failed
       operationId: post-addParticipant
-      description: add new participant into poll
+      description: returns participant's ID
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Participants'
-  '/poll/{pollId}/{participantName}':
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+  '/poll/{pollId}/{participantId}':
     parameters:
       - schema:
           type: string
@@ -80,11 +84,12 @@ paths:
         required: true
       - schema:
           type: string
-        name: participantName
+        name: participantId
         in: path
         required: true
     post:
-      summary: ''
+      tags: []
+      summary: update participant availability
       operationId: update-participant-availability
       responses:
         '200':
@@ -96,6 +101,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Availability'
+      description: No returns.
 components:
   schemas:
     Poll:
