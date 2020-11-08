@@ -22,13 +22,13 @@ paths:
                 type: string
         '417':
           description: Expectation Failed
-      operationId: post-NewEvent
-      description: create new poll
+      operationId: create-new-poll
+      description: create new poll. returns poll ID.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              $ref: '#/components/schemas/Poll'
     parameters: []
   '/poll/{pollId}':
     parameters:
@@ -38,7 +38,7 @@ paths:
         in: path
         required: true
     get:
-      summary: get event
+      summary: find poll by ID
       tags: []
       responses:
         '200':
@@ -47,33 +47,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
-      operationId: get-eventId
-      description: get event
-    post:
-      summary: update participant's availability
-      tags: []
-      operationId: post-eventId
-      responses:
-        '200':
-          description: OK
-        '417':
-          description: Expectation Failed
-      description: update one's availability
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                participantId:
-                  type: integer
-                availability:
-                  $ref: '#/components/schemas/EachAvailablity'
-              required:
-                - participantId
-                - availability
-            examples: {}
-        description: ''
+      operationId: get-poll
+      description: returns poll object contains all data of poll.
   '/poll/{pollId}/addParticipant':
     parameters:
       - schema:
@@ -82,27 +57,45 @@ paths:
         in: path
         required: true
     post:
-      summary: add new participant
+      summary: add new participant into poll
       tags: []
       responses:
         '200':
           description: OK
         '417':
           description: Expectation Failed
-      operationId: post-eventID-addParticipant
+      operationId: post-addParticipant
       description: add new participant into poll
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                password:
-                  type: string
-              required:
-                - name
+              $ref: '#/components/schemas/Participants'
+  '/poll/{pollId}/{participantName}':
+    parameters:
+      - schema:
+          type: string
+        name: pollId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: participantName
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: update-participant-availability
+      responses:
+        '200':
+          description: OK
+        '417':
+          description: Expectation Failed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Availability'
 components:
   schemas:
     Poll:
@@ -110,7 +103,7 @@ components:
       type: object
       x-examples: {}
       properties:
-        eventId:
+        id:
           type: string
         dates:
           type: array
@@ -120,33 +113,39 @@ components:
           type: string
         endTime:
           type: string
-        allAvailability:
-          type: array
-          items:
-            $ref: '#/components/schemas/EachAvailablity'
         participants:
           type: array
           items:
-            type: string
-        passwords:
-          type: array
-          items:
-            type: string
+            $ref: '#/components/schemas/Participant'
       required:
-        - eventId
+        - id
         - dates
         - startTime
         - endTime
-        - allAvailability
         - participants
-        - passwords
-    EachAvailablity:
-      title: EachAvailablity
+    Participant:
+      title: Participant
+      type: object
+      description: single participant's detail
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        availability:
+          $ref: '#/components/schemas/Availability'
+    Availability:
+      title: Availability
       type: array
       items:
-        type: array
-        items:
-          type: boolean
+        type: object
+        properties:
+          start:
+            type: string
+          end:
+            type: string
   securitySchemes:
     API Key - 1:
       name: API Key
