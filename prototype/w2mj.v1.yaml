@@ -7,7 +7,7 @@ info:
     name: Toshimitsu Watanabe
     email: kz86nu@gmail.com
 servers:
-  - url: 'http://localhost:1111'
+  - url: 'http://localhost:8888'
 paths:
   /poll:
     post:
