@@ -11,7 +11,7 @@ servers:
 paths:
   /poll:
     post:
-      summary: create new poll
+      summary: Create new poll
       tags: []
       responses:
         '200':
@@ -20,10 +20,8 @@ paths:
             application/json:
               schema:
                 type: string
-        '417':
-          description: Expectation Failed
       operationId: create-new-poll
-      description: returns poll ID.
+      description: Returns creater poll ID.
     parameters: []
   '/poll/{pollId}':
     parameters:
@@ -33,7 +31,7 @@ paths:
         in: path
         required: true
     get:
-      summary: find poll by ID
+      summary: Get poll
       tags: []
       responses:
         '200':
@@ -43,7 +41,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Poll'
       operationId: get-poll
-      description: returns poll object contains all data of poll.
+      description: Returns poll object contains all data of poll.
   '/poll/{pollId}/addParticipant':
     parameters:
       - schema:
@@ -52,7 +50,7 @@ paths:
         in: path
         required: true
     post:
-      summary: add new participant into poll
+      summary: Add new participant into poll
       tags: []
       responses:
         '200':
@@ -61,10 +59,8 @@ paths:
             application/json:
               schema:
                 type: string
-        '417':
-          description: Expectation Failed
-      operationId: post-addParticipant
-      description: returns participant's ID
+      operationId: add-articipant
+      description: Returns participant's ID.
       requestBody:
         content:
           application/json:
@@ -89,19 +85,17 @@ paths:
         required: true
     post:
       tags: []
-      summary: update participant availability
+      summary: Update participant availability
       operationId: update-participant-availability
       responses:
         '200':
           description: OK
-        '417':
-          description: Expectation Failed
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Availability'
-      description: No returns.
+      description: ''
 components:
   schemas:
     Poll:
@@ -129,10 +123,11 @@ components:
         - startTime
         - endTime
         - participants
+      description: ''
     Participant:
       title: Participant
       type: object
-      description: single participant's detail
+      description: ''
       properties:
         id:
           type: string
